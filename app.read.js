@@ -5,11 +5,15 @@
         var train = snapshot.val();
         var tr = $("<tr>");
         var td = $("<td>");
+        firstArrival = moment();
+        firstArrival.set("seconds", 0);
+        firstArrival.set("minute", moment(train.ftt).minute());
+        firstArrival.set("hour", moment(train.ftt).hour());
         //var firstArrival = moment(moment(train.ftt).format("HH:mm"), "HH:mm");
-        var firstArrival = moment();
-        console.log('firstArrival=',firstArrival.format("HH:mm"));
+        console.log("firstArrival=", firstArrival.format("HH:mm"));
+        //var firstArrival = moment(train.ftt);
         var nextArrival = firstArrival;
-        console.log('nextArrival=',nextArrival.format("HH.mm"));
+        console.log('nextArrival=',nextArrival.format("HH:mm"));
         while (moment(nextArrival) <= moment()){
             loopStopper++;
             if (loopStopper > 50){

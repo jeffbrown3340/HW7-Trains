@@ -14,12 +14,18 @@
         ftt = $("#ftt-input").val().trim();
         freq = $("#freq-input").val().trim();
 
-        fttUnix = moment(ftt, "MM/DD/YYYY").unix();
+        $("#train-name-input").val('');
+        $("#destination-input").val('');
+        $("#ftt-input").val('');
+        $("#freq-input").val('');
+
+
+        fttUnix = moment(ftt, "HH:mm").unix();
 
         database.ref().push({
             name: name,
             destination: destination,
-            ftt: ftt,
+            ftt: fttUnix,
             freq: freq
         });
 
