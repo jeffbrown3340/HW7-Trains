@@ -1,19 +1,22 @@
 (function() {
     var dataRef = firebase.database();
     dataRef.ref().on("child_added", function(snapshot) {
+        var fmt = "MM/DD/YYYY HH:mm"
         var loopStopper = 0;
         var train = snapshot.val();
         var tr = $("<tr>");
         var td = $("<td>");
+        //console.log(moment(train.ftt).format());
+
         firstArrival = moment();
         firstArrival.set("seconds", 0);
         firstArrival.set("minute", moment(train.ftt).minute());
         firstArrival.set("hour", moment(train.ftt).hour());
-        //var firstArrival = moment(moment(train.ftt).format("HH:mm"), "HH:mm");
-        console.log("firstArrival=", firstArrival.format("HH:mm"));
+        //var firstArrival = moment(moment(train.ftt).format(fmt), fmt);
+        //console.log("firstArrival=", firstArrival.format(fmt));
         //var firstArrival = moment(train.ftt);
         var nextArrival = firstArrival;
-        console.log('nextArrival=',nextArrival.format("HH:mm"));
+        //console.log('nextArrival=',nextArrival.format(fmt));
         while (moment(nextArrival) <= moment()){
             loopStopper++;
             if (loopStopper > 50){
@@ -22,7 +25,7 @@
             }
             nextArrival = nextArrival.add(train.freq, "minutes");
         }
-        var prettyNextArr = nextArrival.format("HH:mm");
+        var prettyNextArr = nextArrival.format(fmt);
         tr.append(td.clone().html(train.name));
         tr.append(td.clone().html(train.destination));
         tr.append(td.clone().html(train.freq));
