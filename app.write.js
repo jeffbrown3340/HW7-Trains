@@ -1,5 +1,5 @@
 (function() {
-    var database = firebase.database();
+    var db0 = firebase.database();
 
     var name = "";
     var destination = "";
@@ -15,20 +15,17 @@
         freq = $("#freq-input").val().trim();
         // validate the input, if any are empty return, placeholder advises user
         if (!inputsArePopulated([name, destination, ftt, freq])){return}
+        // associate/set the time to the first day of the unix epoch, just because
+        var fttDate = moment("01/01/1970, " + ftt, "MM/DD/YYYY, HH:mm");
         // additional validation for ftt (first train time)
-        if (ftt.length !== 5 || ftt.charAt(2) !== ':' || isNaN(ftt.split(':')[0]) || isNaN(ftt.split(':'))[1]){
+        if (!fttDate.isValid()){
+        // if (ftt.length !== 5 || ftt.charAt(2) !== ':' || isNaN(ftt.split(':')[0]) || isNaN(ftt.split(':'))[1]){
             $("#ftt-input").attr("placeholder", "INVALID input, enter time as HH:MM, try again ...");
             $("#ftt-input").val('');
             return;
         }
-        var hm = ftt.split(":");
-        var notYetUnix = moment();
-        notYetUnix = notYetUnix.set("hour", parseInt(hm[0]));
-        notYetUnix = notYetUnix.set("minute", parseInt(hm[1]));
-        fttUnix = notYetUnix.unix();
-        console.log(moment(fttUnix).format());
-
-        database.ref().push({
+        var fttUnix = fttDate.unix();
+        db0.ref().push({
             name: name,
             destination: destination,
             ftt: fttUnix,
