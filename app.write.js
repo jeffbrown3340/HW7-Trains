@@ -9,6 +9,7 @@
 
     $('#add-train-btn').on('click', function() {
         event.preventDefault();
+        //get the input
         name = $("#train-name-input").val().trim();
         destination = $("#destination-input").val().trim();
         ftt = $("#ftt-input").val().trim();
@@ -24,6 +25,7 @@
             $("#ftt-input").val('');
             return;
         }
+        //push to firebase
         var fttUnix = fttDate.unix();
         db0.ref().push({
             name: name,
